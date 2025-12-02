@@ -1,9 +1,11 @@
-
 import { TaskManager } from "./logic.js";
 import { type TasksMap } from "./type.js";
 import { defaultTask, getFieldElement, toDateText } from "./utility.js";
+import { queryVisible } from "./visible.js";
 
+const visibleTasks = new queryVisible();
 const manager = new TaskManager();
+
 const top_element = {
     "todo":document.getElementById('tpl-todo') as HTMLTemplateElement,
     "tasks":document.getElementById('tasks') as HTMLUListElement,
@@ -28,7 +30,7 @@ function render(tasks:TasksMap){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-    render(manager.getDataAll())
+    render(visibleTasks.getVisbledTask());
     // console.log(top_element.tasks.querySelectorAll('[data-id]'));
 })
 

@@ -1,6 +1,8 @@
 import { TaskManager } from "./logic.js";
 import {} from "./type.js";
 import { defaultTask, getFieldElement, toDateText } from "./utility.js";
+import { queryVisible } from "./visible.js";
+const visibleTasks = new queryVisible();
 const manager = new TaskManager();
 const top_element = {
     "todo": document.getElementById('tpl-todo'),
@@ -26,7 +28,7 @@ function render(tasks) {
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    render(manager.getDataAll());
+    render(visibleTasks.getVisbledTask());
     // console.log(top_element.tasks.querySelectorAll('[data-id]'));
 });
 top_element.add.addEventListener('click', () => {

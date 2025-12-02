@@ -13,7 +13,7 @@
     <link href="./css/output.css" rel="stylesheet">
 </head>
 <body class="dark:bg-slate-950">
-    <header class="bg-linear-to-b from-slate-900 to-slate-950 font-extrabold text-3xl text-white/30">
+    <header class="fixed top-0 w-full pb-4 bg-linear-to-b from-slate-900 to-slate-950 font-extrabold text-3xl text-white/30">
         <div class="mx-6 pt-3.5 font-serif">
             SimpleToDo
         </div>
@@ -23,10 +23,10 @@
             <input type="button" class="bg-white/10 hover:bg-white/20 px-2 rounded-2xl" value="📅">
         </div>
     </header>
-    <main>
+    <main class="mt-[120px]">
         <ul id="tasks" class="text-white m-6 ">
         </ul>
-        <div class="absolute bottom-15 right-5">
+        <div class="fixed bottom-15 right-5">
             <div id="add-btn" class="text-white/70 m-4 p-4 bg-white/7 hover:bg-white/14 rounded-full text-center cursor-pointer">+</div>
             <div id="checked-btn" class="text-white/70 m-4 p-4 bg-white/7 hover:bg-white/14 rounded-full text-center cursor-pointer">✓</div>
         </div>

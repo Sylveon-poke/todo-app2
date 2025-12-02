@@ -6,12 +6,10 @@ import {
   type TaskId, 
   type TasksMap 
 } from "./type.js";
-import { toArray, toTaskMap } from "./utility.js";
 
 // タスクを管理するクラス
 export class TaskManager {
   private tasks: TasksMap = {};
-  private visibleTask: TasksMap = {};
   private nextId: TaskId = 1;
 
   // ローカルストレージから復元する
@@ -71,19 +69,18 @@ export class TaskManager {
   }
   // 全てのデータを取得する
   getDataAll():TasksMap{
-    this.visibleTask = this.tasks
-    return this.visibleTask;
+    return this.tasks;
   }
 }
 
 
 const task1: Task = {
-  title: "殺しに行く",
+  title: "買い物に行く",
   content: "牛乳・卵・パンを買う",
   dueDate: new Date("2025-12-05"),
   isDone: false,
 };
 
 const manage = new TaskManager()
-console.log(manage.getTask(1))
+// console.log(manage.getTask(1))
 // manage.addTask(task1)
