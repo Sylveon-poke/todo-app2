@@ -1,4 +1,5 @@
 import { read,write } from "./localStorage.js"
+import { buildStoredTasksMap, getMaxId, restoreTasks } from "./task.js";
 import { 
   STORAGE_KEY, 
   type StoredTasksMap, 
@@ -6,6 +7,7 @@ import {
   type TaskId, 
   type TasksMap 
 } from "./type.js";
+
 
 // タスクを管理するクラス
 export class TaskManager {
@@ -15,39 +17,13 @@ export class TaskManager {
   // ローカルストレージから復元する
   constructor() {
     const stored = read<StoredTasksMap>(STORAGE_KEY, {});
-    const loaded: TasksMap = {};
-    let maxId = 0;
-
-    for (const [idStr, t] of Object.entries(stored)) {
-      const id = Number(idStr);
-      loaded[id] = {
-        title: t.title,
-        content: t.content,
-        dueDate: new Date(t.dueDate),
-        isDone: t.isDone,
-      };
-      if (id > maxId) maxId = id;
-    }
-
-    this.tasks = loaded;
-    this.nextId = maxId + 1;
+    this.tasks = restoreTasks(stored);
+    this.nextId = getMaxId(stored) + 1;
   }
 
   // 現在の状態をローカルストレージに保存する
   private save() {
-    const toStore: StoredTasksMap = {};
-
-    for (const [idStr, t] of Object.entries(this.tasks)) {
-      const id = Number(idStr);
-      toStore[id] = {
-        id,
-        title: t.title,
-        content: t.content,
-        dueDate: t.dueDate.toISOString(),
-        isDone: t.isDone,
-      };
-    }
-
+    const toStore: StoredTasksMap = buildStoredTasksMap(this.tasks);
     write<StoredTasksMap>(STORAGE_KEY, toStore);
   }
 

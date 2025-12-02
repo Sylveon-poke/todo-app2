@@ -12,17 +12,6 @@ export const toDateText = (d) => {
     });
     return text;
 };
-export function defaultTask() {
-    const d = new Date();
-    d.setDate(d.getDate() + 7);
-    const task = {
-        title: "新規タスク",
-        content: "",
-        dueDate: d,
-        isDone: false
-    };
-    return task;
-}
 export function toArray(tasks) {
     const arr = Object.entries(tasks);
     return arr;

@@ -1,5 +1,5 @@
 import { TaskManager } from "./logic.js";
-import type { Task, TasksMap } from "./type.js";
+import type { StoredTasksMap, Task, TasksMap } from "./type.js";
 import { toArray, toTaskMap } from "./utility.js";
 
 export class queryVisible{

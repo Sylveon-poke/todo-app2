@@ -1,4 +1,5 @@
 import { read, write } from "./localStorage.js";
+import { buildStoredTasksMap, getMaxId, restoreTasks } from "./task.js";
 import { STORAGE_KEY } from "./type.js";
 // タスクを管理するクラス
 export class TaskManager {
@@ -7,35 +8,12 @@ export class TaskManager {
         this.tasks = {};
         this.nextId = 1;
         const stored = read(STORAGE_KEY, {});
-        const loaded = {};
-        let maxId = 0;
-        for (const [idStr, t] of Object.entries(stored)) {
-            const id = Number(idStr);
-            loaded[id] = {
-                title: t.title,
-                content: t.content,
-                dueDate: new Date(t.dueDate),
-                isDone: t.isDone,
-            };
-            if (id > maxId)
-                maxId = id;
-        }
-        this.tasks = loaded;
-        this.nextId = maxId + 1;
+        this.tasks = restoreTasks(stored);
+        this.nextId = getMaxId(stored) + 1;
     }
     // 現在の状態をローカルストレージに保存する
     save() {
-        const toStore = {};
-        for (const [idStr, t] of Object.entries(this.tasks)) {
-            const id = Number(idStr);
-            toStore[id] = {
-                id,
-                title: t.title,
-                content: t.content,
-                dueDate: t.dueDate.toISOString(),
-                isDone: t.isDone,
-            };
-        }
+        const toStore = buildStoredTasksMap(this.tasks);
         write(STORAGE_KEY, toStore);
     }
     // 新しいタスクを追加する
@@ -59,7 +37,7 @@ export class TaskManager {
     }
 }
 const task1 = {
-    title: "殺しに行く",
+    title: "買い物に行く",
     content: "牛乳・卵・パンを買う",
     dueDate: new Date("2025-12-05"),
     isDone: false,
