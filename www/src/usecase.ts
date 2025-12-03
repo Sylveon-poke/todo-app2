@@ -3,10 +3,8 @@ import type { Task, TaskId } from "./type.js";
 import { queryVisible } from "./visible.js";
 
 export class TaskUseCase{
-    constructor(
-        private manaeger:TaskManager,
-        private visibleTasks:queryVisible
-    ){}
+    manaeger=new TaskManager()
+    visibleTasks = new queryVisible(this.manaeger)
     // Visible Task
     getVisbledTask(){
         return this.visibleTasks.getVisbledTask();
@@ -17,6 +15,12 @@ export class TaskUseCase{
     }
     getTask(id:TaskId){
         return this.manaeger.getTask(id);
+    }
+    deleteTask(id:TaskId){
+        return this.manaeger.deleteTask(id);
+    }
+    toggleTask(id:TaskId){
+        return this.manaeger.toggleTask(id);
     }
 }
 

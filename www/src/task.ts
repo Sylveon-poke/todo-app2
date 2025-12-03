@@ -25,6 +25,7 @@ export function restoreTasks(stored:StoredTasksMap){
     }
     return loaded;
 }
+
 export function buildStoredTasksMap(tasks:TasksMap){
     const toStore: StoredTasksMap = {};
     for (const [idStr, t] of Object.entries(tasks)) {
@@ -39,6 +40,7 @@ export function buildStoredTasksMap(tasks:TasksMap){
     }
     return toStore;
 }
+
 export function getMaxId(stored: StoredTasksMap): number {
   return Math.max(...Object.keys(stored).map(Number), 0);
 }

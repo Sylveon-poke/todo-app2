@@ -7,6 +7,7 @@ import {
   type TaskId, 
   type TasksMap 
 } from "./type.js";
+import { toArray, toTaskMap } from "./utility.js";
 
 
 // タスクを管理するクラス
@@ -43,6 +44,20 @@ export class TaskManager {
     const task = this.tasks[id]
     return task;
   }
+  // 指定したIDのタスクを削除する
+  deleteTask(id:TaskId){
+    const tasks = toArray(this.tasks).filter(
+      ([key])=> key !== String(id)
+    );
+    this.tasks = toTaskMap(tasks);
+    this.save();
+  }
+  toggleTask(id:TaskId){
+    const flgDone = !(this.getTask(id).isDone);
+    this.getTask(id).isDone = flgDone;
+    this.save();
+  }
+
   // 全てのデータを取得する
   getDataAll():TasksMap{
     return this.tasks;

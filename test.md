@@ -1,12 +1,12 @@
-::: mermaid
+:::mermaid
 classDiagram
 User --> View
 View --> TaskUseCase : ユーザー操作
-TaskUseCase --> TaskRepository :追加/更新/削除
+TaskUseCase --> TaskManeger :追加/更新/削除
 TaskUseCase --> TaskQuery :表示用データ
-TaskQuery --> TaskRepository :全データ参照
+TaskQuery --> TaskManeger :全データ参照
 
-class TaskRepository{
+class TaskManeger{
   +add(task)
   +edit(id)
   +delete(id)

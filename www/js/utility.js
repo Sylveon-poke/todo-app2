@@ -20,4 +20,14 @@ export function toTaskMap(ArrTask) {
     const tasksMap = Object.fromEntries(ArrTask);
     return tasksMap;
 }
+export function clickedGetElement(ev, clickClass) {
+    let el = null;
+    for (const element of ev.composedPath()) {
+        if (element instanceof HTMLElement && element.classList.contains(clickClass)) {
+            el = element;
+            break;
+        }
+    }
+    return el;
+}
 //# sourceMappingURL=utility.js.map
