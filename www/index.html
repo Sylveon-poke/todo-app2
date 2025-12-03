@@ -20,15 +20,28 @@
         <div class="flex justify-center text-[1rem] mt-2">
             <input type="search" placeholder="検索" class="border-2 rounded-2xl text-[1rem] py-1.5 px-1.5">
             <input type="button" class="bg-white/10 hover:bg-white/20 px-2 mx-2 rounded-2xl" value="検索">
-            <input type="button" class="bg-white/10 hover:bg-white/20 px-2 rounded-2xl" value="📅">
+        </div>
+        <div class="ml-6 text-[1rem] mt-3">
+            <select id="sort" class="text-white/40 px-2 rounded-2xl border-2 mr-1.5">
+                <option value="" class="bg-slate-800">作成日時昇順</option>
+                <option value="" class="bg-slate-800">期限日時昇順</option>
+                <option value="" class="bg-slate-800">更新日時昇順</option>
+                <option value="" class="bg-slate-800">作成日時降順</option>
+                <option value="" class="bg-slate-800">期限日時降順</option>
+                <option value="" class="bg-slate-800">更新日時降順</option>
+            </select>
+            <select id="checked" class="text-white/40 px-2 rounded-2xl border-2">
+                <option value="todo" class="bg-slate-800">未完了</option>
+                <option value="checked" class="bg-slate-800">完了</option>
+            </select>
         </div>
     </header>
-    <main class="mt-[120px]">
+    <main class="mt-[150px]">
         <ul id="tasks" class="text-white m-6 ">
         </ul>
         <div class="fixed bottom-15 right-5">
-            <div id="add-btn" class="text-white/70 m-4 p-4 bg-white/7 hover:bg-white/14 rounded-full text-center cursor-pointer">+</div>
-            <div id="checked-btn" class="text-white/70 m-4 p-4 bg-white/7 hover:bg-white/14 rounded-full text-center cursor-pointer">✓</div>
+            <div id="add-btn" class="text-white/70 m-4 p-4 bg-slate-600/40 hover:bg-slate-600/60 rounded-full text-center cursor-pointer">+</div>
+            <div id="checked-btn" class="text-white/70 m-4 p-4 bg-slate-600/40 hover:bg-slate-600/60 rounded-full text-center cursor-pointer">✓</div>
         </div>
     </main>
     <!-- 

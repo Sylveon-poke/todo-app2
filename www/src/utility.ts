@@ -6,7 +6,6 @@ export function getFieldElement(taskEl:DocumentFragment,field:string) {
     return el;
   }
 
-
 export const toDateText = (d:Date) =>{ 
     const text = d.toLocaleDateString("ja-JP", {
         year: "numeric",
@@ -24,4 +23,15 @@ export function toArray(tasks:TasksMap){
 export function toTaskMap(ArrTask:[string,Task][]){
   const tasksMap:TasksMap = Object.fromEntries(ArrTask);
   return tasksMap;
+}
+
+export function clickedGetElement(ev:PointerEvent,clickClass:string):HTMLElement|null{
+  let el: HTMLElement | null = null;
+  for (const element of ev.composedPath()) {
+      if (element instanceof HTMLElement && element.classList.contains(clickClass)) {
+          el = element;
+          break; 
+      }
+  }
+  return el;
 }

@@ -1,9 +1,10 @@
 import { TaskManager } from "./logic.js";
+import { defaultTask } from "./task.js";
 import {} from "./type.js";
-import { defaultTask, getFieldElement, toDateText } from "./utility.js";
+import { TaskUseCase } from "./usecase.js";
+import { clickedGetElement, getFieldElement, toDateText } from "./utility.js";
 import { queryVisible } from "./visible.js";
-const visibleTasks = new queryVisible();
-const manager = new TaskManager();
+const app = new TaskUseCase();
 const top_element = {
     "todo": document.getElementById('tpl-todo'),
     "tasks": document.getElementById('tasks'),
@@ -21,18 +22,36 @@ function render(tasks) {
         const title = getFieldElement(task, "title");
         const content = getFieldElement(task, "content");
         const date = getFieldElement(task, "due-date");
+        const done = getFieldElement(task, "done");
         title.textContent = t.title !== "" ? t.title : "新規タスク";
         content.textContent = t.content !== "" ? t.content : "";
+        done.textContent = t.isDone == true ? "戻る" : "完了";
         date.textContent = toDateText(new Date(t.dueDate));
         top_element.tasks.appendChild(task);
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    render(visibleTasks.getVisbledTask());
+    render(app.getVisbledTask());
     // console.log(top_element.tasks.querySelectorAll('[data-id]'));
 });
 top_element.add.addEventListener('click', () => {
-    manager.addTask(defaultTask());
-    render(manager.getDataAll());
+    app.addTask(defaultTask());
+    render(app.getVisbledTask());
+});
+top_element.tasks.addEventListener('click', (ev) => {
+    var _a;
+    const id = ((_a = clickedGetElement(ev, "task")) === null || _a === void 0 ? void 0 : _a.dataset.id) || "-1";
+    if (id === "-1")
+        return;
+    const done = clickedGetElement(ev, "done");
+    if (done) {
+        app.toggleTask(Number(id));
+        render(app.getVisbledTask());
+    }
+    const del = clickedGetElement(ev, "del");
+    if (del) {
+        app.deleteTask(Number(id));
+        render(app.getVisbledTask());
+    }
 });
 //# sourceMappingURL=main.js.map

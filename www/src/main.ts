@@ -2,10 +2,10 @@ import { TaskManager } from "./logic.js";
 import { defaultTask } from "./task.js";
 import { type TasksMap } from "./type.js";
 import { TaskUseCase } from "./usecase.js";
-import { getFieldElement, toDateText } from "./utility.js";
+import { clickedGetElement, getFieldElement, toDateText } from "./utility.js";
 import { queryVisible } from "./visible.js";
 
-const app = new TaskUseCase(new TaskManager,new queryVisible(new TaskManager));
+const app = new TaskUseCase();
 
 const top_element = {
     "todo":document.getElementById('tpl-todo') as HTMLTemplateElement,
@@ -23,8 +23,10 @@ function render(tasks:TasksMap){
         const title = getFieldElement(task,"title")
         const content = getFieldElement(task,"content");
         const date = getFieldElement(task,"due-date");
+        const done = getFieldElement(task,"done");
         title.textContent = t.title !== "" ? t.title:"新規タスク";
         content.textContent = t.content !== "" ? t.content:"";
+        done.textContent = t.isDone == true ? "戻る":"完了"
         date.textContent = toDateText(new Date(t.dueDate))
         top_element.tasks.appendChild(task)
     }
@@ -38,4 +40,20 @@ document.addEventListener('DOMContentLoaded',()=>{
 top_element.add.addEventListener('click',()=>{
     app.addTask(defaultTask());
     render(app.getVisbledTask());
+})
+
+top_element.tasks.addEventListener('click', (ev:PointerEvent) =>{
+    const id = clickedGetElement(ev,"task")?.dataset.id || "-1";
+    if (id==="-1") return;
+    const done = clickedGetElement(ev,"done");
+    if(done){
+        app.toggleTask(Number(id));
+        render(app.getVisbledTask())
+    }
+
+    const del = clickedGetElement(ev,"del");
+    if(del){
+        app.deleteTask(Number(id));
+        render(app.getVisbledTask())
+    }
 })

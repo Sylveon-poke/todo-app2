@@ -1,26 +1,26 @@
 import { TaskManager } from "./logic.js";
-import type { Task, TaskId } from "./type.js";
 import { queryVisible } from "./visible.js";
-
-export class TaskUseCase{
-    manaeger=new TaskManager()
-    visibleTasks = new queryVisible(this.manaeger)
+export class TaskUseCase {
+    constructor() {
+        this.manaeger = new TaskManager();
+        this.visibleTasks = new queryVisible(this.manaeger);
+    }
     // Visible Task
-    getVisibledTask(){
+    getVisbledTask() {
         return this.visibleTasks.getVisibleTask();
     }
     // Task maneger 
-    addTask(task:Task){
+    addTask(task) {
         return this.manaeger.addTask(task);
     }
-    getTask(id:TaskId){
+    getTask(id) {
         return this.manaeger.getTask(id);
     }
-    deleteTask(id:TaskId){
+    deleteTask(id) {
         return this.manaeger.deleteTask(id);
     }
-    toggleTask(id:TaskId){
+    toggleTask(id) {
         return this.manaeger.toggleTask(id);
     }
 }
-
+//# sourceMappingURL=usecase.js.map
