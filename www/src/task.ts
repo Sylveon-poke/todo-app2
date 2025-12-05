@@ -42,7 +42,7 @@ export function buildStoredTasksMap(tasks:TasksMap){
         dueDate: t.dueDate.toISOString(),
         isDone: t.isDone,
         updatedAt:t.updatedAt.toISOString(),
-        createdAt:t.updatedAt.toISOString()
+        createdAt:t.createdAt.toISOString()
       };
     }
     return toStore;
