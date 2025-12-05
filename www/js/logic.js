@@ -2,6 +2,7 @@ import { read, write } from "./localStorage.js";
 import { buildStoredTasksMap, getMaxId, restoreTasks } from "./task.js";
 import { STORAGE_KEY } from "./type.js";
 import { toArray, toTaskMap } from "./utility.js";
+import isEqual from "lodash.isequal";
 // タスクを管理するクラス
 export class TaskManager {
     // ローカルストレージから復元する

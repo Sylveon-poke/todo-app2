@@ -8,7 +8,7 @@ import {
   type TasksMap 
 } from "./type.js";
 import { toArray, toTaskMap } from "./utility.js";
-
+import isEqual from "lodash.isequal";
 
 // タスクを管理するクラス
 export class TaskManager {

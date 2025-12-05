@@ -8,6 +8,9 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "es2022",
+    "moduleResolution": "node",
+    "esModuleInterop": true, 
+    "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "types": [],
     // For nodejs:
