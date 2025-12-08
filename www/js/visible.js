@@ -3,9 +3,6 @@ import { toArray, toTaskMap } from "./utility.js";
 export class queryVisible {
     constructor(manager) {
         this.manager = manager;
-        this.keyword = ""; // 検索文字列
-        this.sortType = "updated-desc"; // 並び替えの種類
-        this.isDone = false;
     }
     /** タスクを配列として取得 */
     getArrayTasks() {
@@ -23,25 +20,32 @@ export class queryVisible {
         return tasks.filter(([id, task]) => task.isDone === flg);
     }
     /** ストラテジ風ソート */
-    sortTasks(tasks, sortType) {
-        // sortTypeごとの関数を登録
-        const strategies = {
-            "due-asc": (a, b) => a.dueDate.getTime() - b.dueDate.getTime(),
-            "due-desc": (a, b) => b.dueDate.getTime() - a.dueDate.getTime(),
-            "created-asc": (a, b) => (a.createdAt.getTime() || 0) - (b.createdAt.getTime() || 0),
-            "created-desc": (a, b) => (b.createdAt.getTime() || 0) - (a.createdAt.getTime() || 0),
-            "updated-asc": (a, b) => (a.updatedAt.getTime() || 0) - (b.updatedAt.getTime() || 0),
-            "updated-desc": (a, b) => (b.updatedAt.getTime() || 0) - (a.updatedAt.getTime() || 0),
+    sortTasks(tasks, field, order) {
+        console.log(field, order);
+        const fieldSelector = {
+            due: (t) => t.dueDate.getTime(),
+            created: (t) => { var _a, _b; return (_b = (_a = t.createdAt) === null || _a === void 0 ? void 0 : _a.getTime()) !== null && _b !== void 0 ? _b : 0; },
+            updated: (t) => { var _a, _b; return (_b = (_a = t.updatedAt) === null || _a === void 0 ? void 0 : _a.getTime()) !== null && _b !== void 0 ? _b : 0; },
         };
-        const compareFn = strategies[sortType];
-        return tasks.sort((a, b) => compareFn(a[1], b[1]));
+        const orderStrategy = {
+            asc: (a, b) => a - b,
+            desc: (a, b) => b - a,
+        };
+        const getValue = fieldSelector[field];
+        const compare = orderStrategy[order];
+        const sorted = [...tasks].sort((a, b) => {
+            const va = getValue(a[1]);
+            const vb = getValue(b[1]);
+            return compare(va, vb);
+        });
+        return sorted;
     }
     /** 検索 → ソート → TasksMap に変換 */
-    getVisibleTask() {
+    getVisibleTask(option) {
         let tasks = this.getArrayTasks();
-        tasks = this.filterByKeyword(tasks, this.keyword);
-        tasks = this.filterByDone(tasks, this.isDone);
-        tasks = this.sortTasks(tasks, this.sortType);
+        tasks = this.filterByKeyword(tasks, option.keyword);
+        tasks = this.filterByDone(tasks, option.isDone);
+        tasks = this.sortTasks(tasks, option.sortBy, option.sorttype);
         // console.log(tasks)
         // console.log(toTaskMap(tasks))
         return toTaskMap(tasks);

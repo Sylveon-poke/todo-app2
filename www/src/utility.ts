@@ -15,9 +15,7 @@ export function toArray(tasks:TasksMap){
 }
 
 export function toTaskMap(ArrTask:[TaskId,Task][]){
-  // console.log(ArrTask)
   const tasksMap:TasksMap = new Map<TaskId,Task>(ArrTask);
-  // console.log(tasksMap)
   return tasksMap;
 }
 

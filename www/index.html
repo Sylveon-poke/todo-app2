@@ -26,6 +26,7 @@
         </div>
         <div class="flex justify-center text-[1rem] mt-2">
             <input
+              id="search-input"
               type="search"
               placeholder="検索"
               class="border-2 rounded-2xl text-[1rem] py-1.5 px-1.5
@@ -33,29 +34,37 @@
                      focus:outline-none 
                      dark:bg-slate-900 dark:text-white/50 dark:border-white/50">
             <input
+              id="search-btn"
               type="button"
               class="px-2 mx-2 rounded-2xl
                      bg-slate-900 text-slate-50 hover:bg-slate-800
-                     dark:bg-white/10 dark:text-white/50 dark:hover:bg-white/20"
+                     dark:bg-white/10 dark:border-2 dark:border-white/10: dark:text-white/50 dark:hover:bg-white/20"
               value="検索">
         </div>
 
         <div class="ml-6 text-[1rem] mt-3">
-            <select id="sort"
+            <select id="field"
               class="px-2 rounded-2xl border-2 mr-1.5
                      bg-white text-slate-700
                      dark:bg-slate-900 dark:text-white/40">
-                <option value="" class="bg-slate-100 dark:bg-slate-800">作成日時</option>
-                <option value="" class="bg-slate-100 dark:bg-slate-800">期限日時</option>
-                <option value="" class="bg-slate-100 dark:bg-slate-800">更新日時</option>
+                <option value="created" class="bg-slate-100 dark:bg-slate-800">
+                    作成日時
+                </option>
+                <option value="due" class="bg-slate-100 dark:bg-slate-800">
+                    期限日時
+                </option>
+                <option value="updated" class="bg-slate-100 dark:bg-slate-800">
+                    更新日時
+                </option>
             </select>
 
             <select
+              id="order"
               class="px-2 rounded-2xl border-2 mr-1.5
                      bg-white text-slate-700
                      dark:bg-slate-900 dark:text-white/40">
-                <option class="bg-slate-100 dark:bg-slate-800">昇順</option>
-                <option class="bg-slate-100 dark:bg-slate-800">降順</option>
+                <option value="asc" class="bg-slate-100 dark:bg-slate-800">昇順</option>
+                <option value="desc" class="bg-slate-100 dark:bg-slate-800">降順</option>
             </select>
 
             <select id="checked"

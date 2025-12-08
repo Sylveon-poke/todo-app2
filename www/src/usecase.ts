@@ -1,14 +1,19 @@
 import { TaskManager } from "./logic.js";
-import type { Task, TaskId } from "./type.js";
+import type { SortField, SortOrder, Task, TaskId, TasksMap } from "./type.js";
 import { queryVisible } from "./visible.js";
 
 export class TaskUseCase{
     manaeger=new TaskManager()
     visibleTasks = new queryVisible(this.manaeger)
     // Visible Task
-    getVisibledTask(){
+    getVisibledTask(option:{
+            keyword:string,
+            sortBy:SortField,
+            sorttype:SortOrder,
+            isDone:boolean
+        }):TasksMap{
         // console.log(this.visibleTasks.getVisibleTask())
-        return this.visibleTasks.getVisibleTask();
+        return this.visibleTasks.getVisibleTask(option);
     }
     // Task maneger 
     addTask(task:Task){

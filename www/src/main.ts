@@ -1,19 +1,25 @@
-import { clickedGetElement, getFieldElement } from "./dom-utils.js";
+import { clickedGetElement, getFieldElement, updateVisible } from "./dom-utils.js";
 import { defaultTask } from "./task.js";
-import { type Task, type TasksMap } from "./type.js";
+import { type Task } from "./type.js";
 import { TaskUseCase } from "./usecase.js";
 import { toDateText } from "./utility.js";
 
 const app = new TaskUseCase();
 
-const top_element = {
-    "test":document.getElementById('test'),
-    "todo":document.getElementById('tpl-todo') as HTMLTemplateElement,
-    "tasks":document.getElementById('tasks') as HTMLUListElement,
-    "add":document.getElementById('add-btn') as HTMLDivElement,
-    "checked":document.getElementById('checked-btn') as HTMLDivElement
+export const top_element = {
+    "test"         :document.getElementById('test'),
+    "todo"         :document.getElementById('tpl-todo')     as HTMLTemplateElement,
+    "tasks"        :document.getElementById('tasks')        as HTMLUListElement,
+    "add"          :document.getElementById('add-btn')      as HTMLDivElement,
+    "checked"      :document.getElementById('checked-btn')  as HTMLDivElement,
+    "searchBtn"    :document.getElementById('search-btn')   as HTMLInputElement,
+    "searchText"   :document.getElementById('search-input') as HTMLInputElement,
+    "statusFilter" :document.getElementById('checked')      as HTMLSelectElement,
+    "field"        :document.getElementById('field')        as HTMLSelectElement,
+    "order"        :document.getElementById('order')        as HTMLSelectElement
 }
-function render(tasks:TasksMap){
+function render(){
+    const tasks = updateVisible(app);
     if (!tasks) return;
     top_element.tasks.innerHTML = '' 
     for (const [idx,t] of Array.from(tasks.entries())) {
@@ -33,13 +39,13 @@ function render(tasks:TasksMap){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-    render(app.getVisibledTask());
+    render();
     // console.log(top_element.tasks.querySelectorAll('[data-id]'));
 })
 
 top_element.add.addEventListener('click',()=>{
     app.addTask(defaultTask());
-    render(app.getVisibledTask());
+    render();
 })
 
 top_element.tasks.addEventListener('click', (ev:PointerEvent) =>{
@@ -48,18 +54,23 @@ top_element.tasks.addEventListener('click', (ev:PointerEvent) =>{
     const done = clickedGetElement(ev,"done");
     if(done){
         app.toggleTask(Number(id));
-        render(app.getVisibledTask());
+        render();
         return;
     }
 
     const del = clickedGetElement(ev,"del");
     if(del){
         app.deleteTask(Number(id));
-        render(app.getVisibledTask());
+        render();
         return;
     }
     window.location.href = `/www/edit.html?id=${id}`;
 })
+top_element.searchBtn.addEventListener('click',render)
+top_element.field.addEventListener('change',render)
+top_element.order.addEventListener('change',render)
+top_element.statusFilter.addEventListener('change',render)
+
 top_element.test?.addEventListener('click',(ev)=>{
     const sampleTasks: Task[] = [
     {
@@ -114,5 +125,5 @@ top_element.test?.addEventListener('click',(ev)=>{
     sampleTasks.forEach(task => {
         app.addTask(task);
     });
-    render(app.getVisibledTask());
+    render();
 })

@@ -1,18 +1,24 @@
 var _a;
-import { clickedGetElement, getFieldElement } from "./dom-utils.js";
+import { clickedGetElement, getFieldElement, updateVisible } from "./dom-utils.js";
 import { defaultTask } from "./task.js";
 import {} from "./type.js";
 import { TaskUseCase } from "./usecase.js";
 import { toDateText } from "./utility.js";
 const app = new TaskUseCase();
-const top_element = {
+export const top_element = {
     "test": document.getElementById('test'),
     "todo": document.getElementById('tpl-todo'),
     "tasks": document.getElementById('tasks'),
     "add": document.getElementById('add-btn'),
-    "checked": document.getElementById('checked-btn')
+    "checked": document.getElementById('checked-btn'),
+    "searchBtn": document.getElementById('search-btn'),
+    "searchText": document.getElementById('search-input'),
+    "statusFilter": document.getElementById('checked'),
+    "field": document.getElementById('field'),
+    "order": document.getElementById('order')
 };
-function render(tasks) {
+function render() {
+    const tasks = updateVisible(app);
     if (!tasks)
         return;
     top_element.tasks.innerHTML = '';
@@ -32,12 +38,12 @@ function render(tasks) {
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    render(app.getVisibledTask());
+    render();
     // console.log(top_element.tasks.querySelectorAll('[data-id]'));
 });
 top_element.add.addEventListener('click', () => {
     app.addTask(defaultTask());
-    render(app.getVisibledTask());
+    render();
 });
 top_element.tasks.addEventListener('click', (ev) => {
     var _a;
@@ -47,17 +53,21 @@ top_element.tasks.addEventListener('click', (ev) => {
     const done = clickedGetElement(ev, "done");
     if (done) {
         app.toggleTask(Number(id));
-        render(app.getVisibledTask());
+        render();
         return;
     }
     const del = clickedGetElement(ev, "del");
     if (del) {
         app.deleteTask(Number(id));
-        render(app.getVisibledTask());
+        render();
         return;
     }
     window.location.href = `/www/edit.html?id=${id}`;
 });
+top_element.searchBtn.addEventListener('click', render);
+top_element.field.addEventListener('change', render);
+top_element.order.addEventListener('change', render);
+top_element.statusFilter.addEventListener('change', render);
 (_a = top_element.test) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (ev) => {
     const sampleTasks = [
         {
@@ -112,6 +122,6 @@ top_element.tasks.addEventListener('click', (ev) => {
     sampleTasks.forEach(task => {
         app.addTask(task);
     });
-    render(app.getVisibledTask());
+    render();
 });
 //# sourceMappingURL=main.js.map

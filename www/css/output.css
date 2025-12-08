@@ -949,6 +949,12 @@
       outline-style: none;
     }
   }
+  .dark\:border-2 {
+    @media (prefers-color-scheme: dark) {
+      border-style: var(--tw-border-style);
+      border-width: 2px;
+    }
+  }
   .dark\:border-white {
     @media (prefers-color-scheme: dark) {
       border-color: var(--color-white);
