@@ -1,0 +1,88 @@
+classDiagram
+    %% データモデル
+    class Task {
+      +title: string
+      +content: string
+      +dueDate: Date
+      +isDone: boolean
+      +createdAt: Date
+      +updatedAt: Date
+    }
+
+    %% 型・ユーティリティ
+    class Types {
+      <<type>>
+      +TaskId
+      +TasksMap
+      +SortField
+      +SortOrder
+    }
+
+    class Utility {
+      <<module>>
+      +formatDate(date): string
+      +genId(): TaskId
+      +cloneTasks()
+    }
+
+    %% 永続化まわり
+    class LocalStorageRepo {
+      <<module>>
+      +load(): TasksMap
+      +save(tasks: TasksMap): void
+      -key: string
+    }
+
+    %% ドメインロジック
+    class Usecase {
+      <<module>>
+      +createTask()
+      +updateTask()
+      +deleteTask()
+      +toggleDone()
+      +search(keyword): Task[]
+      +sort(field, order): Task[]
+      +filterDone(state): Task[]
+    }
+
+    %% DOM / 表示制御
+    class DomUtils {
+      <<module>>
+      +qs(sel): HTMLElement
+      +qsa(sel): HTMLElement[]
+      +on(el, type, handler)
+    }
+
+    class View {
+      <<module>>
+      +render(tasks: Task[])
+      +bindHeaderControls()
+      +bindTaskEvents()
+      +openEditModal(taskId?)
+    }
+
+    %% 起動部
+    class Main {
+      <<entry>>
+      +bootstrap()
+      -bindEvents()
+    }
+
+    %% 関係
+    Types <.. Task
+    Utility <.. Usecase
+    Types <.. Usecase
+    Task "1" <.. "*" Usecase : uses
+
+    LocalStorageRepo --> Types
+    LocalStorageRepo --> Task
+
+    Usecase --> LocalStorageRepo : load/save
+    Usecase --> Utility
+
+    View --> DomUtils
+    View --> Task
+    View --> Usecase
+
+    Main --> View
+    Main --> Usecase

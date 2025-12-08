@@ -33,36 +33,34 @@ export class TaskManager {
         return task;
     }
     // 指定したIDのタスクを上書きする
-    setTask(id, setTask) {
-        const task = this.tasks.get(id);
-        if (!task) {
+    setTask(id, task) {
+        if (!this.tasks.has(id)) {
             throw new Error(`Task not found. id=${id}`);
         }
-        this.tasks.set(id, setTask);
+        this.tasks.set(id, task);
         this.save();
     }
     // 指定したIDのタスクを削除する
     deleteTask(id) {
-        const tasks = toArray(this.tasks).filter(([key]) => key !== id);
-        this.tasks = toTaskMap(tasks);
+        if (!this.tasks.delete(id)) {
+            throw new Error(`Task not found. id=${id}`);
+        }
         this.save();
     }
     // 指定したIDのタスクのisDoneを変更する
     toggleTask(id) {
-        const flgDone = !(this.getTask(id).isDone);
-        this.getTask(id).updatedAt = new Date();
-        this.getTask(id).isDone = flgDone;
-        this.save();
+        const current = this.getTask(id);
+        const updated = Object.assign(Object.assign({}, current), { isDone: !current.isDone, updatedAt: new Date() });
+        this.setTask(id, updated);
     }
     // 指定した ID のタスクを編集する
     editTask(id, editTask) {
         const task = this.getTask(id);
         const isEdited = isEqualTask(task, editTask);
-        if (!isEdited)
+        if (isEdited)
             return;
         editTask.updatedAt = new Date();
         this.setTask(id, editTask);
-        this.save();
     }
     // 全てのデータを取得する
     getDataAll() {
