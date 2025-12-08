@@ -11,7 +11,9 @@ export function toArray(tasks) {
     return arr;
 }
 export function toTaskMap(ArrTask) {
+    console.log(ArrTask);
     const tasksMap = Object.fromEntries(ArrTask);
+    console.log(tasksMap);
     return tasksMap;
 }
 export function isEqualTask(task1, task2) {

@@ -15,7 +15,9 @@ export function toArray(tasks:TasksMap){
 }
 
 export function toTaskMap(ArrTask:[string,Task][]){
+  console.log(ArrTask)
   const tasksMap:TasksMap = Object.fromEntries(ArrTask);
+  console.log(tasksMap)
   return tasksMap;
 }
 

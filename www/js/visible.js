@@ -4,7 +4,7 @@ export class queryVisible {
     constructor(manager) {
         this.manager = manager;
         this.keyword = ""; // 検索文字列
-        this.sortType = "due-asc"; // 並び替えの種類
+        this.sortType = "updated-desc"; // 並び替えの種類
     }
     /** タスクを配列として取得 */
     getArrayTasks() {
@@ -24,10 +24,10 @@ export class queryVisible {
         const strategies = {
             "due-asc": (a, b) => a.dueDate.getTime() - b.dueDate.getTime(),
             "due-desc": (a, b) => b.dueDate.getTime() - a.dueDate.getTime(),
-            "created-asc": (a, b) => { var _a, _b; return (((_a = a.createdAt) === null || _a === void 0 ? void 0 : _a.getTime()) || 0) - (((_b = b.createdAt) === null || _b === void 0 ? void 0 : _b.getTime()) || 0); },
-            "created-desc": (a, b) => { var _a, _b; return (((_a = b.createdAt) === null || _a === void 0 ? void 0 : _a.getTime()) || 0) - (((_b = a.createdAt) === null || _b === void 0 ? void 0 : _b.getTime()) || 0); },
-            "updated-asc": (a, b) => { var _a, _b; return (((_a = a.updatedAt) === null || _a === void 0 ? void 0 : _a.getTime()) || 0) - (((_b = b.updatedAt) === null || _b === void 0 ? void 0 : _b.getTime()) || 0); },
-            "updated-desc": (a, b) => { var _a, _b; return (((_a = b.updatedAt) === null || _a === void 0 ? void 0 : _a.getTime()) || 0) - (((_b = a.updatedAt) === null || _b === void 0 ? void 0 : _b.getTime()) || 0); },
+            "created-asc": (a, b) => (a.createdAt.getTime() || 0) - (b.createdAt.getTime() || 0),
+            "created-desc": (a, b) => (b.createdAt.getTime() || 0) - (a.createdAt.getTime() || 0),
+            "updated-asc": (a, b) => (a.updatedAt.getTime() || 0) - (b.updatedAt.getTime() || 0),
+            "updated-desc": (a, b) => (b.updatedAt.getTime() || 0) - (a.updatedAt.getTime() || 0),
         };
         const compareFn = strategies[sortType];
         return tasks.sort((a, b) => compareFn(a[1], b[1]));
@@ -37,6 +37,8 @@ export class queryVisible {
         let tasks = this.getArrayTasks();
         tasks = this.filterByKeyword(tasks, this.keyword);
         tasks = this.sortTasks(tasks, this.sortType);
+        // console.log(tasks)
+        // console.log(toTaskMap(tasks))
         return toTaskMap(tasks);
     }
 }

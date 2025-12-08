@@ -7,6 +7,7 @@ export class TaskUseCase {
     }
     // Visible Task
     getVisibledTask() {
+        // console.log(this.visibleTasks.getVisibleTask())
         return this.visibleTasks.getVisibleTask();
     }
     // Task maneger 

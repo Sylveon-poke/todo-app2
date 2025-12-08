@@ -69,6 +69,4 @@ export class TaskManager {
     }
 }
 const manage = new TaskManager();
-// console.log(manage.getTask(1))
-// manage.addTask(task1)
 //# sourceMappingURL=logic.js.map
