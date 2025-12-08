@@ -5,6 +5,7 @@ export class queryVisible {
         this.manager = manager;
         this.keyword = ""; // 検索文字列
         this.sortType = "updated-desc"; // 並び替えの種類
+        this.isDone = false;
     }
     /** タスクを配列として取得 */
     getArrayTasks() {
@@ -15,8 +16,11 @@ export class queryVisible {
         if (!keyword.trim())
             return tasks;
         const k = keyword.toLowerCase();
-        return tasks.filter(([id, task]) => task.title.toLowerCase().includes(k) ||
+        return tasks.filter(([_, task]) => task.title.toLowerCase().includes(k) ||
             task.content.toLowerCase().includes(k));
+    }
+    filterByDone(tasks, flg) {
+        return tasks.filter(([id, task]) => task.isDone === flg);
     }
     /** ストラテジ風ソート */
     sortTasks(tasks, sortType) {
@@ -36,6 +40,7 @@ export class queryVisible {
     getVisibleTask() {
         let tasks = this.getArrayTasks();
         tasks = this.filterByKeyword(tasks, this.keyword);
+        tasks = this.filterByDone(tasks, this.isDone);
         tasks = this.sortTasks(tasks, this.sortType);
         // console.log(tasks)
         // console.log(toTaskMap(tasks))

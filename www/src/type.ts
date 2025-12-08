@@ -8,7 +8,7 @@ export interface Task {
 }
 
 export type TaskId = number;
-export type TasksMap = Record<TaskId, Task>;
+export type TasksMap = Map<TaskId, Task>;
 
 export interface StoredTask {
   id: TaskId;

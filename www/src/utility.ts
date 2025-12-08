@@ -1,4 +1,4 @@
-import type { Task, TasksMap } from "./type.js";
+import type { TaskId, Task, TasksMap } from "./type.js";
 
 export const toDateText = (d:Date) =>{ 
     const text = d.toLocaleDateString("ja-JP", {
@@ -10,14 +10,14 @@ export const toDateText = (d:Date) =>{
 }
 
 export function toArray(tasks:TasksMap){
-  const arr = Object.entries(tasks); 
+  const arr =Array.from(tasks.entries()); 
   return arr
 }
 
-export function toTaskMap(ArrTask:[string,Task][]){
-  console.log(ArrTask)
-  const tasksMap:TasksMap = Object.fromEntries(ArrTask);
-  console.log(tasksMap)
+export function toTaskMap(ArrTask:[TaskId,Task][]){
+  // console.log(ArrTask)
+  const tasksMap:TasksMap = new Map<TaskId,Task>(ArrTask);
+  // console.log(tasksMap)
   return tasksMap;
 }
 

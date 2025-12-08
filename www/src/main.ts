@@ -16,7 +16,7 @@ const top_element = {
 function render(tasks:TasksMap){
     if (!tasks) return;
     top_element.tasks.innerHTML = '' 
-    for (const [idx,t] of Object.entries(tasks)) {
+    for (const [idx,t] of Array.from(tasks.entries())) {
         const task = top_element.todo.content.cloneNode(true) as DocumentFragment;
         const li = task.querySelector('li');
         li?.setAttribute('data-id',String(idx));

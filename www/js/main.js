@@ -16,7 +16,7 @@ function render(tasks) {
     if (!tasks)
         return;
     top_element.tasks.innerHTML = '';
-    for (const [idx, t] of Object.entries(tasks)) {
+    for (const [idx, t] of Array.from(tasks.entries())) {
         const task = top_element.todo.content.cloneNode(true);
         const li = task.querySelector('li');
         li === null || li === void 0 ? void 0 : li.setAttribute('data-id', String(idx));

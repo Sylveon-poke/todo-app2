@@ -16,24 +16,24 @@ export function defaultTask():Task{
 }
 
 export function restoreTasks(stored:StoredTasksMap){
-    const loaded: TasksMap = {};
+    const loaded: TasksMap = new Map();
     for (const [idStr, t] of Object.entries(stored)) {
       const id = Number(idStr);
-      loaded[id] = {
+      loaded.set(id, {
         title: t.title,
         content: t.content,
         dueDate: new Date(t.dueDate),
         isDone: t.isDone,
         updatedAt:new Date(t.updatedAt),
         createdAt:new Date(t.createdAt)
-      };
+      });
     }
     return loaded;
 }
 
 export function buildStoredTasksMap(tasks:TasksMap){
     const toStore: StoredTasksMap = {};
-    for (const [idStr, t] of Object.entries(tasks)) {
+    for (const [idStr, t] of Array.from(tasks.entries())) {
       const id = Number(idStr);
       toStore[id] = {
         id,

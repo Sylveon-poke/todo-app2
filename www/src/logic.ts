@@ -12,7 +12,7 @@ import { isEqualTask, toArray, toTaskMap } from "./utility.js";
 
 // タスクを管理するクラス
 export class TaskManager {
-  private tasks: TasksMap = {};
+  private tasks: TasksMap = new Map();
   private nextId: TaskId = 1;
 
   // ローカルストレージから復元する
@@ -31,31 +31,33 @@ export class TaskManager {
   // 新しいタスクを追加する
   addTask(task: Task): TaskId {
     const id = this.nextId++;
-    this.tasks[id] = task;
+    this.tasks.set(id,task);
     this.save();
     return id;
   }
 
   // 指定したIDのタスクを取得する
   getTask(id: TaskId): Task {
-    if (!this.tasks[id]) {
+    const task = this.tasks.get(id);
+    if (!task) {
       throw new Error(`Task not found. id=${id}`);
     }
-    const task = this.tasks[id]
+    
     return task;
   }
   // 指定したIDのタスクを上書きする
   setTask(id:TaskId,setTask:Task){
-      if (!this.tasks[id]) {
+    const task = this.tasks.get(id);
+    if (!task) {
       throw new Error(`Task not found. id=${id}`);
     }
-    this.tasks[id] = setTask;
+    this.tasks.set(id,setTask);
     this.save();
   }
   // 指定したIDのタスクを削除する
   deleteTask(id:TaskId){
     const tasks = toArray(this.tasks).filter(
-      ([key])=> key !== String(id)
+      ([key])=> key !== id
     );
     this.tasks = toTaskMap(tasks);
     this.save();

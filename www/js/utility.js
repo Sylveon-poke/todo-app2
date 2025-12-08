@@ -7,13 +7,13 @@ export const toDateText = (d) => {
     return text;
 };
 export function toArray(tasks) {
-    const arr = Object.entries(tasks);
+    const arr = Array.from(tasks.entries());
     return arr;
 }
 export function toTaskMap(ArrTask) {
-    console.log(ArrTask);
-    const tasksMap = Object.fromEntries(ArrTask);
-    console.log(tasksMap);
+    // console.log(ArrTask)
+    const tasksMap = new Map(ArrTask);
+    // console.log(tasksMap)
     return tasksMap;
 }
 export function isEqualTask(task1, task2) {

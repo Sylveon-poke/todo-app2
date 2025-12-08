@@ -7,25 +7,31 @@ export class queryVisible {
 
     public keyword: string = "";        // 検索文字列
     public sortType: SortType = "updated-desc"; // 並び替えの種類
+    public isDone:boolean = false;
 
     /** タスクを配列として取得 */
-    private getArrayTasks(): [string, Task][] {
+    private getArrayTasks(): [number, Task][] {
         return toArray(this.manager.getDataAll());
     }
 
     /** 検索フィルタ */
-    private filterByKeyword(tasks: [string, Task][], keyword: string): [string, Task][] {
+    private filterByKeyword(tasks: [number, Task][], keyword: string): [number, Task][] {
         if (!keyword.trim()) return tasks;
 
         const k = keyword.toLowerCase();
-        return tasks.filter(([id, task]) => 
+        return tasks.filter(([_, task]) => 
             task.title.toLowerCase().includes(k) ||
             task.content.toLowerCase().includes(k)
         );
     }
+    private filterByDone(tasks: [number, Task][], flg:boolean):[number,Task][]{
+        return tasks.filter(([id,task])=>
+            task.isDone === flg
+        )
+    }
 
     /** ストラテジ風ソート */
-    private sortTasks(tasks: [string, Task][], sortType: SortType): [string, Task][] {
+    private sortTasks(tasks: [number, Task][], sortType: SortType): [number, Task][] {
 
         // sortTypeごとの関数を登録
         const strategies: Record<SortType, (a: Task, b: Task) => number> = {
@@ -46,6 +52,7 @@ export class queryVisible {
         let tasks = this.getArrayTasks();
 
         tasks = this.filterByKeyword(tasks, this.keyword);
+        tasks = this.filterByDone(tasks,this.isDone)
         tasks = this.sortTasks(tasks, this.sortType);
         // console.log(tasks)
         // console.log(toTaskMap(tasks))
