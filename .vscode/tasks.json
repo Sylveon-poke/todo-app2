@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "tsc: build www",           // ★ launch.json と同じ文字列！
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "tsc",
+        "-p",
+        "www/tsconfig.json"               // www/tsconfig.json を使う
+      ],
+      "group": "build",
+      "problemMatcher": "$tsc"
+    }
+  ]
+}
