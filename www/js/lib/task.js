@@ -1,3 +1,4 @@
+/** デフォルトのタスクを生成する関数 */
 export function defaultTask() {
     const d = new Date();
     d.setDate(d.getDate() + 7);
@@ -12,6 +13,7 @@ export function defaultTask() {
     };
     return task;
 }
+/** 保存されたタスクデータを復元する関数 */
 export function restoreTasks(stored) {
     const loaded = new Map();
     for (const [idStr, t] of Object.entries(stored)) {
@@ -21,6 +23,7 @@ export function restoreTasks(stored) {
     }
     return loaded;
 }
+/** タスクデータを保存用に変換する関数 */
 export function buildStoredTasksMap(tasks) {
     const toStore = {};
     for (const [idStr, t] of Array.from(tasks.entries())) {
@@ -29,6 +32,7 @@ export function buildStoredTasksMap(tasks) {
     }
     return toStore;
 }
+/** 保存されたタスクデータから最大のIDを取得する関数 */
 export function getMaxId(stored) {
     return Math.max(...Object.keys(stored).map(Number), 0);
 }

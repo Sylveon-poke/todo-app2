@@ -6,7 +6,7 @@
       "type": "pwa-chrome",
       "request": "launch",
       "name": "Launch Web Page",
-      "url": "http://localhost:5500/www/index.html",
+      "url": "http://localhost:5500/www/edit_AI.html",
       "webRoot": "${workspaceFolder}/www"
     },
 

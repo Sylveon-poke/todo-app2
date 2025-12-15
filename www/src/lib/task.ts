@@ -1,5 +1,5 @@
 import type { StoredTasksMap, Task, TasksMap } from "./type.js";
-
+/** デフォルトのタスクを生成する関数 */
 export function defaultTask():Task{
   const d = new Date();
   d.setDate(d.getDate() + 7);
@@ -14,7 +14,7 @@ export function defaultTask():Task{
   }
   return task
 }
-
+/** 保存されたタスクデータを復元する関数 */
 export function restoreTasks(stored:StoredTasksMap){
     const loaded: TasksMap = new Map();
     for (const [idStr, t] of Object.entries(stored)) {
@@ -35,7 +35,7 @@ export function restoreTasks(stored:StoredTasksMap){
     }
     return loaded;
 }
-
+/** タスクデータを保存用に変換する関数 */
 export function buildStoredTasksMap(tasks:TasksMap){
     const toStore: StoredTasksMap = {};
     for (const [idStr, t] of Array.from(tasks.entries())) {
@@ -56,7 +56,7 @@ export function buildStoredTasksMap(tasks:TasksMap){
     }
     return toStore;
 }
-
+/** 保存されたタスクデータから最大のIDを取得する関数 */
 export function getMaxId(stored: StoredTasksMap): number {
   return Math.max(...Object.keys(stored).map(Number), 0);
 }

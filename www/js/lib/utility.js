@@ -1,3 +1,4 @@
+/** 日付を「YYYY/MM/DD」形式の文字列に変換する関数 */
 export const toDateText = (d) => {
     const text = d.toLocaleDateString("ja-JP", {
         year: "numeric",
@@ -6,14 +7,17 @@ export const toDateText = (d) => {
     });
     return text;
 };
+/** タスクのマップを配列に変換する関数 */
 export function toArray(tasks) {
     const arr = Array.from(tasks.entries());
     return arr;
 }
+/** 配列をタスクのマップに変換する関数 */
 export function toTaskMap(ArrTask) {
     const tasksMap = new Map(ArrTask);
     return tasksMap;
 }
+/** 2つのタスクが等しいかどうかを比較する関数 */
 export function isEqualTask(task1, task2) {
     let changeedFlg = false;
     const isDiffTask = {

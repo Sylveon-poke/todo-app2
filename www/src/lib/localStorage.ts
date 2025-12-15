@@ -7,15 +7,11 @@ export interface AppStorage {
   removeItem(key: string): void;
   clear(): void;
 }
-/**
- * 本番用のローカルストレージ
- */
+/** 本番用のローカルストレージ */
 export function createBrowserStorage(): AppStorage {
   return localStorage;
 }
-/**
- * ローカルストレージのモック
- */
+/** ローカルストレージのモック */
 export function createMemoryStorage(): AppStorage {
   return new LocalStorageMock();
 }

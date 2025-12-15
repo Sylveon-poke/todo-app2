@@ -2,9 +2,9 @@ import { createBrowserStorage, createMemoryStorage, read, write } from "./lib/lo
 import { buildStoredTasksMap, getMaxId, restoreTasks } from "./lib/task.js";
 import { STORAGE_KEY } from "./lib/type.js";
 import { isEqualTask } from "./lib/utility.js";
-// タスクを管理するクラス
+/** タスク管理クラス */
 export class TaskManager {
-    // ローカルストレージから復元する
+    /** コンストラクタ */
     constructor() {
         this.tasks = new Map();
         this.nextId = 1;
@@ -13,19 +13,19 @@ export class TaskManager {
         this.tasks = restoreTasks(stored);
         this.nextId = getMaxId(stored) + 1;
     }
-    // 現在の状態をローカルストレージに保存する
+    /** タスクデータを保存するプライベートメソッド */
     save() {
         const toStore = buildStoredTasksMap(this.tasks);
         write(this.storage, STORAGE_KEY, toStore);
     }
-    // 新しいタスクを追加する
+    /*  新しいタスクを追加する */
     addTask(task) {
         const id = this.nextId++;
         this.tasks.set(id, task);
         this.save();
         return id;
     }
-    // 指定したIDのタスクを取得する
+    /*  指定したIDのタスクを取得する */
     getTask(id) {
         const task = this.tasks.get(id);
         if (!task) {
@@ -33,7 +33,7 @@ export class TaskManager {
         }
         return task;
     }
-    // 指定したIDのタスクを上書きする
+    /*  指定したIDのタスクを更新する */
     setTask(id, task) {
         if (!this.tasks.has(id)) {
             throw new Error(`Task not found. id=${id}`);
@@ -41,20 +41,20 @@ export class TaskManager {
         this.tasks.set(id, task);
         this.save();
     }
-    // 指定したIDのタスクを削除する
+    /*  指定したIDのタスクを削除する */
     deleteTask(id) {
         if (!this.tasks.delete(id)) {
             throw new Error(`Task not found. id=${id}`);
         }
         this.save();
     }
-    // 指定したIDのタスクのisDoneを変更する
+    /*  指定したIDのタスクの完了状態を切り替える */
     toggleTask(id) {
         const current = this.getTask(id);
         const updated = Object.assign(Object.assign({}, current), { isDone: !current.isDone, updatedAt: new Date() });
         this.setTask(id, updated);
     }
-    // 指定した ID のタスクを編集する
+    /*  指定したIDのタスクを編集する */
     editTask(id, editTask) {
         const task = this.getTask(id);
         const isEdited = isEqualTask(task, editTask);
@@ -63,7 +63,7 @@ export class TaskManager {
         editTask.updatedAt = new Date();
         this.setTask(id, editTask);
     }
-    // 全てのデータを取得する
+    /*  すべてのタスクを取得する */
     getDataAll() {
         return this.tasks;
     }

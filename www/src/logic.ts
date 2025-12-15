@@ -9,27 +9,27 @@ import {
 } from "./lib/type.js";
 import { isEqualTask } from "./lib/utility.js";
 
-// タスクを管理するクラス
+/** タスク管理クラス */
 export class TaskManager {
   private tasks: TasksMap = new Map();
   private nextId: TaskId = 1;
   private storage = createMemoryStorage()
 
-  // ローカルストレージから復元する
+  /** コンストラクタ */
   constructor() {
     const stored = read<StoredTasksMap>(this.storage,STORAGE_KEY, {});
     this.tasks = restoreTasks(stored);
     this.nextId = getMaxId(stored) + 1;
   }
 
-  // 現在の状態をローカルストレージに保存する
+  /** タスクデータを保存するプライベートメソッド */
   private save() {
     const toStore: StoredTasksMap = buildStoredTasksMap(this.tasks);
     write<StoredTasksMap>(this.storage,STORAGE_KEY, toStore);
     
   }
 
-  // 新しいタスクを追加する
+  /*  新しいタスクを追加する */
   addTask(task: Task): TaskId {
     const id = this.nextId++;
     this.tasks.set(id, task);
@@ -37,7 +37,7 @@ export class TaskManager {
     return id;
   }
 
-  // 指定したIDのタスクを取得する
+  /*  指定したIDのタスクを取得する */
   getTask(id: TaskId): Task {
     const task = this.tasks.get(id);
     if (!task) {
@@ -46,7 +46,7 @@ export class TaskManager {
 
     return task;
   }
-  // 指定したIDのタスクを上書きする
+  /*  指定したIDのタスクを更新する */
   setTask(id: TaskId, task: Task) {
     if (!this.tasks.has(id)) {
       throw new Error(`Task not found. id=${id}`);
@@ -54,14 +54,14 @@ export class TaskManager {
     this.tasks.set(id, task);
     this.save();
   }
-  // 指定したIDのタスクを削除する
+  /*  指定したIDのタスクを削除する */
   deleteTask(id: TaskId) {
     if (!this.tasks.delete(id)) {
       throw new Error(`Task not found. id=${id}`);
     }
     this.save();
   }
-  // 指定したIDのタスクのisDoneを変更する
+  /*  指定したIDのタスクの完了状態を切り替える */
   toggleTask(id: TaskId) {
     const current = this.getTask(id);
     const updated: Task = {
@@ -71,7 +71,7 @@ export class TaskManager {
     };
     this.setTask(id, updated);
   }
-  // 指定した ID のタスクを編集する
+  /*  指定したIDのタスクを編集する */
   editTask(id: TaskId, editTask: Task) {
     const task = this.getTask(id);
     const isEdited = isEqualTask(task, editTask);
@@ -79,7 +79,7 @@ export class TaskManager {
     editTask.updatedAt = new Date();
     this.setTask(id, editTask);
   }
-  // 全てのデータを取得する
+  /*  すべてのタスクを取得する */
   getDataAll(): TasksMap {
     return this.tasks;
   }

@@ -1,13 +1,9 @@
 import { LocalStorageMock } from "../test/localStorageMock.js";
-/**
- * 本番用のローカルストレージ
- */
+/** 本番用のローカルストレージ */
 export function createBrowserStorage() {
     return localStorage;
 }
-/**
- * ローカルストレージのモック
- */
+/** ローカルストレージのモック */
 export function createMemoryStorage() {
     return new LocalStorageMock();
 }

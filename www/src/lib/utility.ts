@@ -1,5 +1,5 @@
 import type { TaskId, Task, TasksMap } from "./type.js";
-
+/** 日付を「YYYY/MM/DD」形式の文字列に変換する関数 */
 export const toDateText = (d:Date) =>{ 
     const text = d.toLocaleDateString("ja-JP", {
         year: "numeric",
@@ -8,17 +8,19 @@ export const toDateText = (d:Date) =>{
     });
     return text;
 }
-
+/** タスクのマップを配列に変換する関数 */
 export function toArray(tasks:TasksMap){
   const arr =Array.from(tasks.entries()); 
   return arr
 }
 
+/** 配列をタスクのマップに変換する関数 */
 export function toTaskMap(ArrTask:[TaskId,Task][]){
   const tasksMap:TasksMap = new Map<TaskId,Task>(ArrTask);
   return tasksMap;
 }
 
+/** 2つのタスクが等しいかどうかを比較する関数 */
 export function isEqualTask(task1:Task,task2:Task){
   let changeedFlg = false;
   

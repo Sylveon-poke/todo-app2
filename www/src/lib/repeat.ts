@@ -13,7 +13,7 @@ export function addMonths(date: Date, months: number): Date {
   d.setDate(Math.min(day, lastDay));
   return d;
 }
-
+/** 指定した日付に週数を加算するヘルパー関数 */
 export function addWeeks(date: Date, weeks: number): Date {
   // 年/月/日/時/分/秒 を保持して、日付だけを進める
   const y = date.getFullYear();
@@ -27,6 +27,7 @@ export function addWeeks(date: Date, weeks: number): Date {
   const out = new Date(y, m, d + weeks * 7, hh, mm, ss, ms);
   return out;
 }
+/** 指定した日付に日数を加算するヘルパー関数 */
 export function addDays(date: Date, days: number): Date {
   // 年/月/日/時/分/秒 を保持して、日付だけを進める
   const y = date.getFullYear();

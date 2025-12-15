@@ -2,7 +2,7 @@ import type { Task } from "../lib/type.js";
 import { TaskUseCase } from "../usecase.js";
 
 const app = new TaskUseCase();
-const sampleTasks: Task[] = [
+export const sampleTasks: Task[] = [
     {
         title: "資料作成",
         content: "クライアント向け提案資料の作成",
@@ -58,12 +58,11 @@ const sampleTasks: Task[] = [
         updatedAt: new Date("2025-12-06T14:00:00"),
         createdAt: new Date("2025-12-05T16:30:00"),
         priorty:"low",
-        repeat:{ enabled:true, count:1, unit:"month"}
+        repeat:{ enabled:true, count:2, unit:"month"}
     }
 ];
 sampleTasks.forEach(task => {
     app.addTask(task);
-
 });
 
 console.log("サンプルタスクを追加しました。");
