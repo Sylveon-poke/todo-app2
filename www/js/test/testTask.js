@@ -48,9 +48,19 @@ const sampleTasks = [
         isDone: false,
         updatedAt: new Date("2025-12-06T12:00:00"),
         createdAt: new Date("2025-12-06T12:00:00")
+    }, {
+        title: "映画鑑賞",
+        content: "新作映画を観に行く",
+        dueDate: new Date("2025-12-13"),
+        isDone: false,
+        updatedAt: new Date("2025-12-06T14:00:00"),
+        createdAt: new Date("2025-12-05T16:30:00"),
+        priorty: "low",
+        repeat: { enabled: true, count: 1, unit: "month" }
     }
 ];
 sampleTasks.forEach(task => {
     app.addTask(task);
 });
+console.log("サンプルタスクを追加しました。");
 //# sourceMappingURL=testTask.js.map
