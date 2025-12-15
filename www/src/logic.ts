@@ -84,5 +84,3 @@ export class TaskManager {
     return this.tasks;
   }
 }
-
-const manage = new TaskManager()

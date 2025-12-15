@@ -23,7 +23,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-    //   "preLaunchTask": "tsc: build www"
+      // "preLaunchTask": "tsc: build www"
     }
   ]
 }
