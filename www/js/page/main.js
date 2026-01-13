@@ -62,8 +62,10 @@ top_element.tasks.addEventListener('click', (ev) => {
     }
     const del = clickedGetElement(ev, "del");
     if (del) {
-        app.deleteTask(Number(id));
-        render();
+        if (confirm("本当にこのタスクを削除しますか？")) {
+            app.deleteTask(Number(id));
+            render();
+        }
         return;
     }
     let copy = clickedGetElement(ev, "copy-btn");
