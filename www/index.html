@@ -24,9 +24,14 @@
              dark:text-white/30
              z-10
              font-extrabold text-3xl">
-        <div class="mx-6 pt-3.5 font-serif max-w-[100px] opacity-30">
-            <img src="./img/dark_title.png" alt="" srcset="">
-        </div>
+        <picture class="h-12">
+            <source
+            srcset="img/darkmode_logo.png"
+            media="(prefers-color-scheme: dark)">
+            <img
+            src="img/lightmode_logo.png"
+            class="mx-6 pt-3.5 max-w-[180px] opacity-50">
+        </picture>
         <div class="flex justify-center text-[1rem] mt-2">
             <input id="search-input" type="search" placeholder="検索" class="border-2 rounded-2xl text-[1rem] py-1.5 px-1.5
                      bg-white text-slate-900
