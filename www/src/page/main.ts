@@ -70,6 +70,7 @@ top_element.tasks.addEventListener('click', (ev:PointerEvent) =>{
         }
         return;
     }
+    
     let copy = clickedGetElement(ev,"copy-btn");
     if(copy){
         app.copyTask(Number(id));

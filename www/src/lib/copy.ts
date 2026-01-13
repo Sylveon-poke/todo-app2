@@ -11,7 +11,7 @@ export const copyToClipboard = (id: TaskId) => {
     const taskText = `タイトル: ${title}\n詳細: ${content}\n期日: ${dueDate}`;
 
     navigator.clipboard.writeText(taskText).then(() => {
-        console.log('Task copied to clipboard');
+        // console.log('Task copied to clipboard');
     }).catch(err => {
         console.error('Could not copy text: ', err);
     });
