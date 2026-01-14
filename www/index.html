@@ -127,7 +127,20 @@
                     </div>
                 </div>
             </div>
-            <div class="copy-btn mt-1"><img src="./img/content_copy.png" class="opacity-25 bg-white/40 p-1 rounded-sm scale-80" alt="" srcset=""></div>
+            <div class="copy-btn mt-1">
+                <picture>
+                    <!-- ダークモード用 -->
+                    <source
+                        srcset="./img/content_copy.png"
+                        media="(prefers-color-scheme: dark)">
+                    <!-- ライトモード用 -->
+                    <img
+                        src="./img/content_copy_light.png"
+                        class="opacity-25 bg-black/30 dark:bg-white/40 p-1 rounded-sm scale-80"
+                        alt="コピー">
+                </picture>
+            </div>
+            <!-- <div class="copy-btn mt-1"><img src="./img/content_copy.png" class="opacity-25 bg-white/40 p-1 rounded-sm scale-80" alt="" srcset=""></div> -->
         </li>
     </template>
 </body>
